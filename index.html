@@ -1,0 +1,110 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Birthday</title>
+    <link rel="icon" href="./anom/assets/ballontitle.ico" type="image/jeg" />
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="script.js"></script> -->
+</head>
+
+<body>
+    <div class="starter" id="titleInfo">
+        <h1>To Netra</h1>
+        <h2>I wanted to wish in some special way</h2>
+        <h3>...so here it is</h3>
+    </div>
+    <div class="main-page" id="main">
+        <div class="cake-image">
+            <img id="cakeunblown" src="assets/happyfun1.jpg" alt="cakenotblown">
+            <img id="cakeblown" src="assets/happyfun.webp" alt="cakeblown">
+            <button onclick="cakebtnclicked()" id="cakeblowbtn">Make a wish,<br> blow the Candle</button>
+        </div>
+       
+        <canavas id="confettiCanvas"></canavas>
+
+
+    </div>
+    <canvas id="balloons"></canvas>
+
+  
+    <script>
+        var showConfetti = false;
+let ballonArr = [];
+document.addEventListener('DOMContentLoaded', (event) => {
+    const titleInfo = document.getElementById('titleInfo');
+    const main = document.getElementById('main');
+    if (titleInfo && main) {
+        titleInfo.style.display = 'block';
+        main.style.display = 'none';
+        setTimeout(() => {
+            titleInfo.style.display = 'none';
+            main.style.display = 'flex';
+            console.log('Content hidden');
+            showConfetti = true;
+            createBalloons();
+        }, 300);
+    }
+});
+
+function cakebtnclicked() {
+    const cakeUnblown = document.getElementById("cakeunblown");
+    const cakeBlown = document.getElementById('cakeblown');
+    const cakebtn = document.getElementById('cakeblowbtn');
+    if (cakeUnblown && cakeBlown && cakebtn) {
+        cakeUnblown.style.display = 'none';
+        cakeBlown.style.display = 'block';
+        cakebtn.style.display = 'none';
+    } else {
+        console.error('Cake elements not found');
+    }
+}
+
+ const confettiCanvas = document.getElementById('confettiCanvas');
+ const balloonCanvas = document.getElementById('balloons');
+ const confettiCtx = (confettiCanvas)?? confettiCanvas.getContext('2d');
+ const ballonCtx = balloonCanvas.getContext('2d');
+
+
+
+ function createBalloons() {
+    ballonArr = []
+    for(let i=0;i<200;i++) {
+        ballonArr.push({
+            x: Math.random() * balloonCanvas.width,
+            y: Math.random()*balloonCanvas.height - balloonCanvas.height,
+            r: Math.random()*6 + 2,
+            color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+            tilt: Math.random() * 10 - 5,
+            speed: Math.random() * 2 + 1,
+        });
+    }
+ }
+
+ function drawBalloons() {
+    ballonCtx.clearRect(0,0, balloonCanvas.width, balloonCanvas.height);
+    ballonArr.forEach((bal)=>{
+        ballonCtx.beginPath();
+        ballonCtx.arc(bal.x, bal.y,bal.r,0,Math.PI * 2);
+        ballonCtx.fillStyle = bal.color;
+        ballonCtx.fill();
+        bal.y +=bal.speed;
+        bal.tilt+=Math.random() * 0.1 -0.05;
+         if(bal.y > balloonCanvas.height)bal.y = -bal.r;
+    });
+ }
+
+ function startAnimation() {
+    drawBalloons();
+    requestAnimationFrame(startAnimation);
+ }
+
+ startAnimation();
+
+
+    </script>
+
+</body>
+
+</html>
