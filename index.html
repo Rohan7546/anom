@@ -8,7 +8,8 @@
       margin: 0;
       overflow: hidden;
       height: 100vh;
-      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+      background: linear-gradient(45deg,#fbe3e8, #f9c5bd, #fff5d7, #e1b382 );
+      /* background-color:  #f9c5bd; */
       background-size: 400% 400%;
       animation: gradientBG 4s infinite;
       display: flex;
@@ -65,8 +66,7 @@
       z-index: 2;
     }
     .main-page {
-      text-align: center;      
-      transform: translateY(-49px);
+      text-align: center;
     }
     .header {
       display: flex;
@@ -256,7 +256,14 @@
     let speedy = 2;
     let audioElementDance = new Audio('assets/realdance.mp3');
     let audioElement = new Audio('assets/happybirthday.mp3');
-    audioElement.play();
+   let playAudio = true;
+    document.body.addEventListener('mousemove',()=>{
+      if(playAudio) {
+        audioElement.play();
+        playAudio = false;
+      }
+    })
+
     let allowClick = true;
 
     // Confetti Animation
